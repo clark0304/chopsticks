@@ -5,37 +5,37 @@
 `Chopsticks` is built on [Hammerspoon](https://www.hammerspoon.org/) and [Spoons](https://github.com/Hammerspoon/Spoons), utilizing [Lua](https://www.lua.org/) and [AppleScript](https://developer.apple.com/library/archive/documentation/AppleScript/Conceptual/AppleScriptLangGuide/introduction/ASLR_intro.html) to design an extension framework suitable for local secondary development.
 
 - BrowserReload **_拓展模块_**
-    - 作为一问多答同屏共版 AI 多家平台页面, 所配套的工具箱之一, 可自定义标签页面同步数据, 以加载其他端点的实时信息
+  - 作为一问多答同屏共版 AI 多家平台页面, 所配套的工具箱之一, 可自定义标签页面同步数据, 以加载其他端点的实时信息
 - EmmyLua
-    - Thie plugin generates EmmyLua annotations for Hammerspoon and any installed Spoons
+  - Thie plugin generates EmmyLua annotations for Hammerspoon and any installed Spoons
 - Commander
-    - This spoon lets execute commands from other spoon by a chooser
+  - This spoon lets execute commands from other spoon by a chooser
 - HSKeybindings
-    - Display Keybindings registered with bindHotkeys() and Spoons
+  - Display Keybindings registered with bindHotkeys() and Spoons
 - KSheet
-    - Keybindings cheatsheet for current application
+  - Keybindings cheatsheet for current application
 - MouseCircle
-    - Draws a circle around the mouse pointer when a hotkey is pressed
+  - Draws a circle around the mouse pointer when a hotkey is pressed
 - MouseFollowsFocus
-    - Set the mouse pointer to the center of the focused window whenever focus changes
+  - Set the mouse pointer to the center of the focused window whenever focus changes
 - InputSourceSwitch
-    - Automatically switch the input source when switching applications
+  - Automatically switch the input source when switching applications
 - ReloadConfiguration
-    - Adds a hotkey to reload the hammerspoon configuration, and a pathwatcher to automatically reload on changes
+  - Adds a hotkey to reload the hammerspoon configuration, and a pathwatcher to automatically reload on changes
 - Seal
-    - Pluggable launch bar
+  - Pluggable launch bar
 - SpeedMenu
-    - Menubar netspeed meter
+  - Menubar netspeed meter
 - TextClipboardHistory
-    - Keep a history of the clipboard, only for text entries
+  - Keep a history of the clipboard, only for text entries
 - WifiNotifier
-    - Receive notifications every time your wifi network changes
+  - Receive notifications every time your wifi network changes
 - WiFiTransitions
-    - Allow arbitrary actions when transitioning between SSIDs
+  - Allow arbitrary actions when transitioning between SSIDs
 - WindowHalfsAndThirds
-    - Simple window movement and resizing, focusing on half- and third-of-screen sizes
+  - Simple window movement and resizing, focusing on half- and third-of-screen sizes
 - WindowScreenLeftAndRight
-    - Move windows to other screens
+  - Move windows to other screens
 
 ## 目录结构
 
