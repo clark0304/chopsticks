@@ -122,6 +122,7 @@ hs.hotkey.bind(keyHyper, "L", function()
     browserReload.reload({
         sites = {
             ["chatglm.cn/main/alltoolsdetail"] = true,
+            ["chatgpt.com"]                    = true,
             ["chat.deepseek.com"]              = true,
             ["claude.ai"]                      = false,
             ["gemini.google.com/app"]          = false,
