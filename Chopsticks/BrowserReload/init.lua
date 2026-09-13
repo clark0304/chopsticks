@@ -47,7 +47,7 @@ local function render(template, vars)
     end))
 end
 
-function M.reload(config)
+function M.openReload(config)
     config      = config or {}
     local sites = config.sites or {}
 
@@ -64,7 +64,7 @@ function M.reload(config)
 
     local app = hs.application.get(browserID)
     if not app then
-        hs.alert.show("浏览器未运行: " .. browserID)
+        hs.alert.show("浏览器未运行:\n" .. browserID)
         return
     end
 
@@ -80,10 +80,11 @@ function M.reload(config)
     elseif browserID == "com.apple.Safari" then
         templateName = "lib_safari.applescript"
         vars = {
+            BROWSER_ID      = "Safari",
             MATCH_CONDITION = condition,
         }
     else
-        hs.alert.show("暂不支持此浏览器批量刷新:\n" .. browserID)
+        hs.alert.show("暂不支持此浏览器:\n" .. browserID)
         return
     end
 
@@ -94,11 +95,12 @@ function M.reload(config)
     end
 
     local script = render(template, vars)
-    local ok, err = hs.osascript.applescript(script)
+    local ok, result, raw = hs.osascript.applescript(script)
 
     if not ok then
-        hs.printf("[BrowserReload] AppleScript 错误: %s", tostring(err))
-        hs.alert.show("刷新失败，请看 Console")
+        hs.printf("[BrowserReload] AppleScript result: %s", tostring(result))
+        hs.printf("[BrowserReload] AppleScript raw: %s", hs.inspect(raw))
+        hs.alert.show("刷新失败, 请查看 Console")
         return
     end
 

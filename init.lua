@@ -119,7 +119,7 @@ Install:andUse("WiFiTransitions", {
 local browserReload = require("Chopsticks.BrowserReload.init")
 
 hs.hotkey.bind(keyHyper, "L", function()
-    browserReload.reload({
+    browserReload.openReload({
         sites = {
             ["chatglm.cn/main/alltoolsdetail"] = true,
             ["chatgpt.com"]                    = true,
