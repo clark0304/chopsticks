@@ -116,6 +116,25 @@ Install:andUse("WiFiTransitions", {
     start = true
 })
 
+local browserFocus = require("Chopsticks.BrowserFocus.init")
+
+hs.hotkey.bind(keyHyper, "K", function()
+    browserFocus.openFocus({
+        sites = {
+            ["chatglm.cn/main/alltoolsdetail"] = false,
+            ["chatgpt.com"]                    = false,
+            ["chat.deepseek.com"]              = false,
+            ["claude.ai"]                      = false,
+            ["gemini.google.com/app"]          = false,
+            ["www.google.com/search"]          = false,
+            ["grok.com"]                       = true,
+            ["www.kimi.com"]                   = false,
+            ["www.qianwen.com"]                = false,
+            ["chat.z.ai"]                      = false,
+        },
+    })
+end)
+
 local browserReload = require("Chopsticks.BrowserReload.init")
 
 hs.hotkey.bind(keyHyper, "L", function()

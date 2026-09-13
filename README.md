@@ -2,10 +2,12 @@
 
 ## 摘要
 
-`Chopsticks` is built on [Hammerspoon](https://www.hammerspoon.org/) and [Spoons](https://github.com/Hammerspoon/Spoons), utilizing [Lua](https://www.lua.org/) and [AppleScript](https://developer.apple.com/library/archive/documentation/AppleScript/Conceptual/AppleScriptLangGuide/introduction/ASLR_intro.html) to design an extension framework suitable for local secondary development.
+`Chopsticks` is built on [Hammerspoon](https://www.hammerspoon.org/) and [Spoons](https://github.com/Hammerspoon/Spoons), using [Lua](https://www.lua.org/) and [AppleScript](https://developer.apple.com/library/archive/documentation/AppleScript/Conceptual/AppleScriptLangGuide/introduction/ASLR_intro.html) to build an extension framework for local secondary development.
 
-- BrowserReload **_拓展模块_**
-  - 作为一问多答同屏共版 AI 多家平台页面, 所配套的工具箱之一, 可自定义标签页面同步数据, 以加载其他端点的实时信息
+- BrowserFocus **_浏览器聚焦模块_**
+  - 一问多答, 同屏共版场景下, 一键聚焦 & 置顶窗口
+- BrowserReload **_浏览器刷新模块_**
+  - 一问多答, 同屏共版场景下, 可自定义同步刷新的标签页，让其他端点的实时信息一并加载, 一键刷新 & 置顶窗口
 - EmmyLua
   - Thie plugin generates EmmyLua annotations for Hammerspoon and any installed Spoons
 - Commander
@@ -39,18 +41,23 @@
 
 ## 目录结构
 
-| 路径          | 说明                                                                           |
-| ------------- | ------------------------------------------------------------------------------ |
-| `init.lua`    | 入口文件: 配置环境, 绑定快捷键                                                 |
-| `Chopsticks/` | **_拓展_**:`BrowserReload` 的 Lua 业务逻辑主体                                 |
-| `Plates/`     | **_拓展_**:`BrowserReload` 使用的 AppleScript 模板 (按浏览器核心类型拆成 2 份) |
-| `Spoons/`     | 自动下载, 管理所有第三方插件                                                   |
+| 路径          | 说明                                                                         |
+| ------------- | ---------------------------------------------------------------------------- |
+| `init.lua`    | 入口文件: 配置环境, 绑定快捷键, 注入 Spoons & Chopsticks                     |
+| `Chopsticks/` | **_拓展_**:`BrowserReload` 存放 Lua 业务逻辑                                 |
+| `Plates/`     | **_拓展_**:`BrowserReload` 存放 AppleScript 模板 (按浏览器核心类型拆成 2 份) |
+| `Saucers/`    | **_拓展_**:`BrowserFocus` 存放 JaveScript 模板 (按标签类型拆成 N 份)         |
+| `Spoons/`     | 自动下载, 管理所有第三方插件                                                 |
 
 > [!NOTE]
 >
-> 参照 `Spoons` (勺子: 代码和数据/一体), 扩展模块命名为 `Chopsticks` (筷子: 代码/逻辑) 与 `Plates` (盘子: 数据/模板)
+> 参照 `Spoons` (勺子: 一体化), 扩展模块命名规则:
+>
+> - `Chopsticks` (筷子: 逻辑/控制)
+> - `Plates` (盘子: 通信/应程)
+> - `Saucers` (碟子: 载荷/微操)
 
-## 拓扑图
+## 拓扑图 (以 BrowserReload 为例)
 
 ```mermaid
 graph TD
@@ -101,11 +108,72 @@ graph TD
 > - `Chopsticks/BrowserReload/init.lua` 纯 Lua 层: 检测环境, 识别默认浏览器, 生成匹配条件, 调用 AppleScript, 渲染模板
 > - `Plates/BrowserReload/lib_*.applescript` 纯 AppleScript 层: 按浏览器引擎类型拆成 Chromium / Safari 2 份, 与 Lua 层解耦
 
+## 拓扑图 (以 BrowserFocus 为例)
+
+### 各层职责
+
+| 层级   | 术语    | 技术栈      | 核心职责                             | 优势                                                           |
+| :----- | :------ | :---------- | :----------------------------------- | :------------------------------------------------------------- |
+| 控制层 | Host    | Lua         | 热键, 配置, 状态, 参数组装, 错误反馈 | 轻量常驻, 系统 API 丰富                                        |
+| 桥接层 | Bridge  | AppleScript | 跨进程通信, 操控原生 GUI 和应用程序  | macOS 原生支持, 标准化控制 Applications                        |
+| 执行层 | Payload | JavaScript  | 在网页上下文中实现元素级的精细控制   | 浏览器原生引擎, 避免一般 GUI 自动化 (如坐标 & 模拟点击) 的干扰 |
+
+### 架构
+
+| 特点       | 优势                                                                                                                                             |
+| :--------- | :----------------------------------------------------------------------------------------------------------------------------------------------- |
+| 健壮性     | 走 Application 内部事件总线, 免疫分辨率变化、弹窗、输入法等外部 GUI 干扰                                                                         |
+| 低耦合     | 浏览器控制与网页操作分离，浏览器适配和页面适配可以独立维护                                                                                       |
+| 关注点分离 | Lua 负责 "何时做 WHEN" 和 "调资源 WHERE" 和 "做什么 WHAT", AppleScript 负责 "找谁做 WHO" (特定应程), JavaScript 负责 "具体怎么做 HOW" (特定动作) |
+| 可扩展性   | 不需要修改任何 Lua 或 AppleScript 或 JavaScript 逻辑代码，只需新增配置项, 符合开闭原则 (OCP)                                                     |
+| 安全性     | 包裹错误处理机制                                                                                                                                 |
+
+### 为何三层? (能力边界)
+
+| 需求                 | Lua | AppleScript | JavaScript |
+| :------------------- | :-: | :---------: | :--------: |
+| 常驻: 后台全局热键   | ✅  |     ❌      |     ❌     |
+| 查询: 默认浏览器是谁 | ✅  |     ❌      |     ❌     |
+| 枚举/切换: 标签页面  | ❌  |     ✅      |     ❌     |
+| 查询: 标签页面 URL   | ❌  |     ✅      | 仅自身页面 |
+| 精细操作: DOM 元素   | ❌  |     ❌      |     ✅     |
+| 交互: 处理反馈信息   | ✅  |     ✅      |     ✅     |
+
+> [!NOTE]
+>
+> 没有任何单一语言能同时覆盖 "系统级热键监听 + 跨应用程序操控 + 页面内DOM微操" 这三个维度
+
+### DSL Pipeline
+
+```language-plain
+
+             Configuration
+                   │
+                   ▼
+         Hammerspoon / Lua
+                   │
+          ┌────────┴────────┐
+          │                 │
+      BrowserID           SiteID
+          │                 │
+          ▼                 ▼
+    Browser Adapter    JSCode Adapter
+          │                 │
+          └────────┬────────┘
+                   ▼
+         Application / AppleScript
+                   │
+                   ▼
+             Web DOM / JavaScript
+
+```
+
 ## 已启用的 快捷键 与 模块
 
 | 快捷键                  | 功能                                 | 模块                     |
 | ----------------------- | ------------------------------------ | ------------------------ |
-| `⌃ ⌥ ⌘ + B`             | 批量刷新 AI 标签页面                 | BrowserReload            |
+| `⌃ ⌥ ⌘ + K`             | 一键聚焦 AI 标签页面                 | BrowserFocus             |
+| `⌃ ⌥ ⌘ + L`             | 批量刷新 AI 标签页面                 | BrowserReload            |
 | `⌃ ⌥ ⌘ + '`             | 命令面板                             | Commander                |
 | `⌃ ⌥ ⌘ + I / O`         | macOS 快捷键速查表 开关              | HSKeybindings            |
 | `⌃ ⌥ ⌘ + P`             | Spoon 快捷键速查表 开关              | KSheet                   |
@@ -127,12 +195,12 @@ graph TD
 
 - `sites` 是 "域名 =? 是否启用" 的映射
 - `CHROMIUM_BROWSERS` 是 "浏览器 =? 是否启用" 的映射
-- 而非直接增删数组条目, 若想临时停用某个站点或某个浏览器, 改一下布尔值就行, 不用删代码, 也保留了 "曾经支持过" 的历史记录
-- Safari 作为一个固定的单独分支来处理, 它没有原生 `reload` 命令, 靠 "把 URL 重新赋值给自己" 触发刷新, 不需要额外开启 Safari 的开发者菜单权限
+- 用布尔开关代替增删条目，便于临时停用并保留 "曾支持" 记录
+- Safari 单独分支, 无通用 `reload` 命令, 可用 "重设 URL" 方式触发
 
 ### 权限要求
 
-- 首次触发时, macOS 系统会弹窗询问是否允许 `Hammerspoon` 控制目标浏览器, 需要在 **系统设置 → 隐私与安全性 → 自动化** 中允许 `Hammerspoon` 控制对应的浏览器, 否则 AppleScript 调用会失败
+- 首次触发时, macOS 系统会弹窗询问是否允许 `Hammerspoon` 控制目标浏览器, 需要在 **系统设置 → 隐私与安全性 → 自动化** 中勾选
 
 ### 具体条目
 
