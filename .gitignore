@@ -41,3 +41,8 @@ luac.out
 
 # macOS
 .DS_Store
+
+# Spoons
+Spoons/*
+!Spoons/SpoonInstall.spoon/
+!Spoons/SpoonInstall.spoon/**
