@@ -172,8 +172,9 @@ graph TD
 
 | 快捷键                  | 功能                                 | 模块                     |
 | ----------------------- | ------------------------------------ | ------------------------ |
-| `⌃ ⌥ ⌘ + J`             | 一键聚焦 沉浸式翻译 标签页面         | BrowserFocus             |
-| `⌃ ⌥ ⌘ + K`             | 一键聚焦 AI 标签页面                 | BrowserFocus             |
+| `⌃ ⌥ ⌘ + H`             | 一键聚焦 沉浸式翻译 标签页面         | BrowserFocus             |
+| `⌃ ⌥ ⌘ + J`             | 一键聚焦 Grok 标签页面               | BrowserFocus             |
+| `⌃ ⌥ ⌘ + K`             | 一键聚焦 Multi-Panel 标签页面        | BrowserFocus             |
 | `⌃ ⌥ ⌘ + L`             | 批量刷新 AI 标签页面                 | BrowserReload            |
 | `⌃ ⌥ ⌘ + '`             | 命令面板                             | Commander                |
 | `⌃ ⌥ ⌘ + I / O`         | macOS 快捷键速查表 开关              | HSKeybindings            |
@@ -195,7 +196,7 @@ graph TD
 > [!NOTE]
 >
 > - 独立意义上, 系统级引入了 [Karabiner-Elements](https://karabiner-elements.pqrs.org/)
-> - 可配置: 点击鼠标中键 -> `⌃ ⌥ ⌘ + J`
+> - 可配置: 点击鼠标中键 -> `⌃ ⌥ ⌘ + H`
 >   - 二者均可独立生效
 >   - 二者无任何兼容性问题, 因为 `KE` 是在系统更底层监听了鼠标事件, 可跳转至 `HS` 的时间线
 

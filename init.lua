@@ -118,7 +118,7 @@ Install:andUse("WiFiTransitions", {
 
 local browserFocus = require("Chopsticks.BrowserFocus.init")
 
-hs.hotkey.bind(keyHyper, "J", function()
+hs.hotkey.bind(keyHyper, "H", function()
     browserFocus.openFocus({
         sites = {
             ["immersivetranslate.com/zh-Hans/translate"] = true,
@@ -126,7 +126,7 @@ hs.hotkey.bind(keyHyper, "J", function()
     })
 end)
 
-hs.hotkey.bind(keyHyper, "K", function()
+hs.hotkey.bind(keyHyper, "J", function()
     browserFocus.openFocus({
         sites = {
             ["chatglm.cn/main/alltoolsdetail"] = false,
@@ -139,6 +139,14 @@ hs.hotkey.bind(keyHyper, "K", function()
             ["www.kimi.com"]                   = false,
             ["www.qianwen.com"]                = false,
             ["chat.z.ai"]                      = false,
+        },
+    })
+end)
+
+hs.hotkey.bind(keyHyper, "K", function()
+    browserFocus.openFocus({
+        sites = {
+            ["iokalaafkmjffolodkkgbbccmofbglii/multi-panel/multi-panel.html"] = true,
         },
     })
 end)

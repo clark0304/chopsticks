@@ -14,17 +14,18 @@ local CHROMIUM_BROWSERS = {
 }
 
 local SUPPORTED_SITES   = {
-    ["chatglm.cn/main/alltoolsdetail"]           = false,
-    ["chatgpt.com"]                              = false,
-    ["chat.deepseek.com"]                        = false,
-    ["claude.ai"]                                = false,
-    ["gemini.google.com/app"]                    = false,
-    ["www.google.com/search"]                    = false,
-    ["grok.com"]                                 = true,
-    ["www.kimi.com"]                             = false,
-    ["www.qianwen.com"]                          = false,
-    ["chat.z.ai"]                                = false,
-    ["immersivetranslate.com/zh-Hans/translate"] = true,
+    ["chatglm.cn/main/alltoolsdetail"]                                = false,
+    ["chatgpt.com"]                                                   = false,
+    ["chat.deepseek.com"]                                             = false,
+    ["claude.ai"]                                                     = false,
+    ["gemini.google.com/app"]                                         = false,
+    ["www.google.com/search"]                                         = false,
+    ["grok.com"]                                                      = true,
+    ["www.kimi.com"]                                                  = false,
+    ["www.qianwen.com"]                                               = false,
+    ["chat.z.ai"]                                                     = false,
+    ["immersivetranslate.com/zh-Hans/translate"]                      = true,
+    ["iokalaafkmjffolodkkgbbccmofbglii/multi-panel/multi-panel.html"] = true,
 }
 
 local function loadJsForSite(tag)
