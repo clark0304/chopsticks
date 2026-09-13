@@ -104,7 +104,7 @@ function M.openReload(config)
         return
     end
 
-    hs.alert.show("AI 标签页已刷新")
+    hs.alert.show("标签页已刷新")
 end
 
 return M

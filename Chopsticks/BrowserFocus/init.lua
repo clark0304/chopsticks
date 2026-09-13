@@ -106,7 +106,7 @@ function M.openFocus(config)
         return
     end
 
-    hs.alert.show("AI 标签页已聚焦")
+    hs.alert.show("标签页已聚焦")
 end
 
 return M
