@@ -118,6 +118,14 @@ Install:andUse("WiFiTransitions", {
 
 local browserFocus = require("Chopsticks.BrowserFocus.init")
 
+hs.hotkey.bind(keyHyper, "J", function()
+    browserFocus.openFocus({
+        sites = {
+            ["immersivetranslate.com/zh-Hans/translate"] = true,
+        },
+    })
+end)
+
 hs.hotkey.bind(keyHyper, "K", function()
     browserFocus.openFocus({
         sites = {
